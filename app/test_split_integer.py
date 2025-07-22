@@ -1,21 +1,43 @@
-from app.split_integer import split_integer
+import pytest
+from app import split_integer
 
+@pytest.mark.parametrize(
+    "value, number_of_parts",
+    [
+        (10, 3),
+        (100, 10),
+        (7, 5),
+        (0, 1),
+        (5, 5),
+        (15, 4),
+    ],
+)
+def test_sum_of_parts_equals_value(value, number_of_parts):
+    parts = split_integer.split_integer(value, number_of_parts)
+    assert sum(parts) == value, "Suma elementów powinna równać się wartości wejściowej"
 
-def test_sum_of_the_parts_should_be_equal_to_value() -> None:
-    pass
+@pytest.mark.parametrize(
+    "value, number_of_parts",
+    [
+        (10, 3),
+        (100, 10),
+        (7, 5),
+        (15, 4),
+    ],
+)
+def test_parts_are_sorted(value, number_of_parts):
+    parts = split_integer.split_integer(value, number_of_parts)
+    assert parts == sorted(parts), "Lista powinna być posortowana rosnąco"
 
-
-def test_should_split_into_equal_parts_when_value_divisible_by_parts() -> None:
-    pass
-
-
-def test_should_return_part_equals_to_value_when_split_into_one_part() -> None:
-    pass
-
-
-def test_parts_should_be_sorted_when_they_are_not_equal() -> None:
-    pass
-
-
-def test_should_add_zeros_when_value_is_less_than_number_of_parts() -> None:
-    pass
+@pytest.mark.parametrize(
+    "value, number_of_parts",
+    [
+        (10, 3),
+        (100, 10),
+        (7, 5),
+        (15, 4),
+    ],
+)
+def test_difference_max_min_is_at_most_one(value, number_of_parts):
+    parts = split_integer.split_integer(value, number_of_parts)
+    assert max(parts) - min(parts) <= 1, "Różnica między max a min nie powinna przekraczać 1"
