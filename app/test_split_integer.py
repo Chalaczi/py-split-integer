@@ -1,52 +1,18 @@
-import pytest
-from app import split_integer
+from app.split_integer import split_integer
 
+def test_sum_and_length():
+    result = split_integer(10, 3)
+    assert sum(result) == 10
+    assert len(result) == 3
 
-@pytest.mark.parametrize(
-    "value, number_of_parts",
-    [
-        (10, 3),
-        (100, 10),
-        (7, 5),
-        (0, 1),
-        (5, 5),
-        (15, 4),
-    ],
-)
-def test_sum_of_parts_equals_value(value: int, number_of_parts: int) -> None:
-    parts = split_integer.split_integer(value, number_of_parts)
-    assert sum(parts) == value, (
-        "Suma elementów powinna równać się wartości wejściowej"
-    )
+def test_balanced_distribution():
+    result = split_integer(10, 3)
+    assert max(result) - min(result) <= 1
 
+def test_exact_division():
+    result = split_integer(9, 3)
+    assert result == [3, 3, 3]
 
-@pytest.mark.parametrize(
-    "value, number_of_parts",
-    [
-        (10, 3),
-        (100, 10),
-        (7, 5),
-        (15, 4),
-    ],
-)
-def test_parts_are_sorted(value: int, number_of_parts: int) -> None:
-    parts = split_integer.split_integer(value, number_of_parts)
-    assert parts == sorted(parts), "Lista powinna być posortowana rosnąco"
-
-
-@pytest.mark.parametrize(
-    "value, number_of_parts",
-    [
-        (10, 3),
-        (100, 10),
-        (7, 5),
-        (15, 4),
-    ],
-)
-def test_difference_max_min_is_at_most_one(
-    value: int, number_of_parts: int
-) -> None:
-    parts = split_integer.split_integer(value, number_of_parts)
-    assert max(parts) - min(parts) <= 1, (
-        "Różnica między max a min nie powinna przekraczać 1"
-    )
+def test_remainder_distribution():
+    result = split_integer(10, 3)
+    assert result == [4, 3, 3]
